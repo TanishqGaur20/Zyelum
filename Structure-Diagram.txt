@@ -1,0 +1,71 @@
+Frontend (Next.js) [Port 3000]                 Backend (Express) [Port 5000]
++------------------------+                    +------------------------+
+|                        |                    |                        |
+|    Next.js App         |                    |    Express Server      |
+|    +--------------+    |       REST        |    +--------------+    |
+|    | Pages/App    |<---|------API--------->|    | API Routes   |    |
+|    +--------------+    |                    |    +--------------+    |
+|    | Components   |    |                    |    | Controllers |    |
+|    +--------------+    |                    |    +--------------+    |
+|    | Services     |    |                    |    | Services    |    |
+|    +--------------+    |                    |    +--------------+    |
+|                        |                    |                        |
++------------------------+                    +------------------------+
+
+Data Flow:
+User → Frontend → API Request → Backend → Response → Frontend → User Display
+
+Technology Stack & Rationale:
+
+1. Frontend:
+   
+   - Next.js (React Framework)
+   - TypeScript for type safety
+   - Benefits:
+     - Server-side rendering
+     - Optimized performance
+     - Built-in routing
+     - TypeScript support
+2. Backend:
+   
+   - Express.js
+   - Node.js runtime
+   - Benefits:
+     - Lightweight and flexible
+     - Large ecosystem
+     - Easy to scale
+     - Quick to develop
+3. API Integration:
+   
+   - RESTful API architecture
+   - CORS enabled
+   - JSON data format
+   - Structured endpoints (/api/...)
+Scalability Plan:
+
+1. Frontend Scaling:
+   
+   - Component-based architecture
+   - Code splitting
+   - Static generation where possible
+   - CDN deployment
+   - Caching strategies
+2. Backend Scaling:
+   
+   - Horizontal scaling capability
+   - Load balancing ready
+   - Microservices architecture potential
+   - API versioning support
+3. Deployment Strategy:
+   
+   - Frontend: Vercel (optimized for Next.js)
+   - Backend: Railway or Heroku
+   - CI/CD pipeline with GitHub Actions
+   - Environment-based configuration
+4. Monitoring & Performance:
+   
+   - API health checks
+   - Performance monitoring
+   - Error tracking
+   - Analytics integration
+This structure allows for easy maintenance, scalability, and future feature additions while maintaining good performance and developer experience.
