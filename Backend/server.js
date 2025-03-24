@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -6,19 +7,27 @@ const testimonialRoutes = require("./routes/testimonial");
 
 const app = express();
 
-// Middleware
-app.use(cors());
+// Enhanced CORS configuration
+app.use(
+  cors({
+    origin: ["http://localhost:3000", process.env.FRONTEND_URL],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
+
+// Add console log to debug
+console.log("MongoDB URI:", process.env.MONGODB_URI);
 
 // MongoDB connection with error handling
 mongoose
-  .connect(
-    "mongodb://gyelum:gyelum@cluster0-shard-00-00.hp38n.mongodb.net:27017,cluster0-shard-00-01.hp38n.mongodb.net:27017,cluster0-shard-00-02.hp38n.mongodb.net:27017/?replicaSet=atlas-xp5ppn-shard-0&ssl=true&authSource=admin&retryWrites=true&w=majority&appName=Cluster0",
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }
-  )
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("MongoDB connection error:", err));
 

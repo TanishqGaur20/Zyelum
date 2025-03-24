@@ -32,7 +32,9 @@ const Navbar = () => {
   }, []);
 
   const pathname = usePathname();
-  const isAdminRoute = pathname?.includes("/admin");
+  const isAdminRoute = ["/admin/testimonials", "/admin/pricing"].some((route) =>
+    pathname?.includes(route)
+  );
 
   return (
     <div
@@ -107,6 +109,16 @@ const Navbar = () => {
             } rounded-full`}
           >
             <Link href={"#pricing"}>Get Started</Link>
+          </button>
+          {/* Add Admin Panel Button */}
+          <button
+            className={`capitalize text-sm sm:text-base border-2 hover:border-2 font-semibold sm:py-3 py-2 px-3 sm:px-6 ${
+              isAdminRoute
+                ? "text-white border-white hover:bg-white hover:text-gray-900"
+                : "text-gray-600 border-gray-600 hover:border-gray-600 hover:bg-gray-600 hover:text-white"
+            } rounded-full`}
+          >
+            <Link href="/admin/testimonials">Admin Panel</Link>
           </button>
           <button>
             {theme === "dark" || isAdminRoute ? (

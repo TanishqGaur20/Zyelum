@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Layout from "@/components/admin/Layout";
+import toast from "react-hot-toast";
 
 export default function PricingAdmin() {
   const [plans, setPlans] = useState([]);
@@ -28,26 +29,36 @@ export default function PricingAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:5000/api/pricing", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      fetchPlans();
-      setFormData({
-        type: "monthly",
-        name: "",
-        title: "",
-        price: "",
-        btnText: "",
-        trail: "",
-        features: [""],
-        suggested: false,
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/pricing`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (response.ok) {
+        toast.success("Pricing plan added successfully!");
+        fetchPlans();
+        setFormData({
+          type: "monthly",
+          name: "",
+          title: "",
+          price: "",
+          btnText: "",
+          trail: "",
+          features: [""],
+          suggested: false,
+        });
+      } else {
+        toast.error("Failed to add pricing plan");
+      }
     } catch (error) {
       console.error("Error adding pricing plan:", error);
+      toast.error("Error adding pricing plan");
     }
   };
 

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Layout from "@/components/admin/Layout";
+import toast from 'react-hot-toast';
 
 export default function TestimonialsAdmin() {
   const [testimonials, setTestimonials] = useState([]);
@@ -20,7 +21,7 @@ export default function TestimonialsAdmin() {
   const fetchTestimonials = async () => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:5000/api/testimonials");
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonials`);
       const data = await response.json();
       setTestimonials(data);
     } catch (error) {
@@ -33,17 +34,24 @@ export default function TestimonialsAdmin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await fetch("http://localhost:5000/api/testimonials", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonials`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      fetchTestimonials();
-      setFormData({ name: "", role: "", image: "", review: "", rating: 5 });
+      
+      if (response.ok) {
+        toast.success('Testimonial added successfully!');
+        fetchTestimonials();
+        setFormData({ name: "", role: "", image: "", review: "", rating: 5 });
+      } else {
+        toast.error('Failed to add testimonial');
+      }
     } catch (error) {
       console.error("Error adding testimonial:", error);
+      toast.error('Error adding testimonial');
     }
   };
 

@@ -6,6 +6,7 @@ import Footer from "./Footer";
 import ScrollTop from "./ScrollTop";
 import NextNProgress from "nextjs-progressbar";
 import { useState, useEffect } from "react";
+import { Toaster } from 'react-hot-toast';
 
 const ThemeProvider = ({ children }) => {
   const [mounted, setMounted] = useState(false);
@@ -20,6 +21,7 @@ const ThemeProvider = ({ children }) => {
 
   return (
     <Theme attribute={"class"} enableSystem={false}>
+      <Toaster position="top-right" />
       <NextNProgress
         color="#e11d48"
         startPosition={0.3}
