@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const Pricing = require('../models/Pricing');
+const Pricing = require("../models/pricing");
 
-router.get('/pricing', async (req, res) => {
+router.get("/pricing", async (req, res) => {
   try {
-    const monthlyPlans = await Pricing.find({ type: 'monthly' });
-    const annualPlans = await Pricing.find({ type: 'annual' });
+    const monthlyPlans = await Pricing.find({ type: "monthly" });
+    const annualPlans = await Pricing.find({ type: "annual" });
     res.json({ monthly: monthlyPlans, annual: annualPlans });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
-router.post('/pricing', async (req, res) => {
+router.post("/pricing", async (req, res) => {
   try {
     const pricing = new Pricing(req.body);
     const newPricing = await pricing.save();
